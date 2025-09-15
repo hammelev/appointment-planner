@@ -1,5 +1,6 @@
 import { Contact } from "../../types/types";
 import ContactPicker from "../contactPicker/ContactPicker";
+import { getTodayString } from "../../utils/date";
 
 interface AppointmentFormProps {
     contacts: Array<Contact>,
@@ -26,13 +27,6 @@ export default function AppointmentForm({
     const handleOnChangeContact = (e: React.ChangeEvent<HTMLSelectElement>) => {
         e.preventDefault();
         setContactName(e.target.value);
-    };
-
-    const getTodayString = () => {
-        const [month, day, year] = new Date()
-            .toLocaleDateString("en-US")
-            .split("/");
-        return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     };
 
     return (

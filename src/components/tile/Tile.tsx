@@ -1,15 +1,24 @@
-import {Contact, Appointment} from "../../types/types";
+import { Contact, Appointment } from "../../types/types";
+
+type TileDescription = Omit<Contact, "name"> | Omit<Appointment, "name">;
 
 interface TileProps {
-  name: string,
-  description: Omit<Contact, "name"> | Omit<Appointment, "name">
+  name: string;
+  description: TileDescription;
 }
 
-export default function Tile ({name, description} : TileProps) {
+const renderDescription = (description: TileDescription) => {
+  return Object.entries(description).map(([key, value]) => {
+    const displayValue = value instanceof Date ? value.toLocaleString() : String(value);
+    return <p key={key} className="tile">{`${key}: ${displayValue}`}</p>;
+  });
+};
+
+export default function Tile({ name, description }: TileProps) {
   return (
     <div className="tile-container">
       <p className="tile-title">{name}</p>
-      {Object.values(description).map(value => <p key={typeof(value) === "string" ? value : JSON.stringify(value)} className="tile">{typeof(value) === "string" ? value : JSON.stringify(value)}</p>)}
+      {renderDescription(description)}
     </div>
   );
-};
+}
